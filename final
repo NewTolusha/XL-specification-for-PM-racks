@@ -1,0 +1,830 @@
+Sub RUJH_specification_PM()
+' RUJH_specification_PM Ìàêðîñ
+' Òîëüêî ôðîíòàëüíûå ñòåëëàæè è îöèíêîâàííûå ñòîéêè
+'óäàëåíèå ëèøíèõ ñòðîê è ñòîëáöîâ
+    Rows("1:1").Delete Shift:=xlUp
+    Columns("R:S").Delete Shift:=xlToLeft
+    Columns("R:AJ").ClearContents
+    Range("a1").End(xlDown).Offset(1, 0).EntireRow.Delete
+    Range("a1").End(xlDown).Offset(1, 0).EntireRow.ClearContents
+    Range("a1").End(xlDown).Offset(2, 0).EntireRow.ClearContents
+    Range("a1").End(xlDown).Offset(3, 0).EntireRow.ClearContents
+    Range("a1").End(xlDown).Offset(4, 0).EntireRow.ClearContents
+'''
+'óäàëåíèå ïðàâèë è îôîðìëåíèÿ
+    Cells.FormatConditions.Delete
+    Cells.Interior.Pattern = xlNone
+    
+'âû÷èñëåíèå êîëè÷åñòâà ñòðîê
+    lLastRowD = Cells(Rows.Count, "I").End(xlUp).Row
+
+'âñòàâèòü ñòîëáöû B, F, G, H, I, J
+    Columns("B:B").Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+    Columns("F:J").Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+        
+'ïåðåìåùåíèå ñòîëáöîâ â íóæíûé ïîðÿäîê è óäàëåíèå ëèøíèõ ñòîëáöîâ
+    Columns("Q").Cut Destination:=Columns("X")
+    Columns("T").Cut Destination:=Columns("Y")
+    Columns("R").Cut Destination:=Columns("Z")
+    Columns("U").Cut Destination:=Columns("AA")
+    Columns("Q:R").Delete Shift:=xlToLeft
+    Columns("R:S").Delete Shift:=xlToLeft
+    
+'ïåðåèìåíîâàíèå ñòîëáöîâ
+    Range("A1").Value = "Êîë-âî"
+    Range("B1").Value = "Íàèìåíîâàíèå / Îïèñàíèå"
+    Range("F1").Value = "3"
+    Range("G1").Value = "9"
+    Range("H1").Value = "11"
+    Range("I1").Value = "12"
+    Range("J1").Value = "14"
+    Range("N1").Value = "Öâåò / Ïîêðûòèå"
+    Range("T1").Value = "Âåñ 1 øò."
+    Range("U1").Value = "Îáùèé âåñ"
+    Range("V1").Value = "Ñòîèìîñòü êàëüê."
+    Range("W1").Value = "Òîòàë ñòîèìîñòü êàëüê."
+    Range("X1").Value = "Èíâîéñ ñåé÷àñ"
+    Range("Y1").Value = "Òîòàë èíâîéñ ñåé÷àñ"
+    Range("Z1").Value = "Öåíà 1 øò. áåç ÍÄÑ"
+    Range("AA1").Value = "Öåíà áåç ÍÄÑ"
+    Range("AB1").Value = "Öåíà 1 øò. ñ ÍÄÑ"
+    Range("AC1").Value = "Öåíà ñ ÍÄÑ"
+    
+'çàïîëíåíèå òåõíè÷åñêèõ ñòîëáöîâ
+    Range("F2").Value = _
+        "=IF(LEFT(RC[-3],15)=""DIA'B'GA'25'12'"",55555,IF(LEFT(RC[-3],12)=""DIA'B'25'12'"",666666,LEFT(RC[-3],3)))"
+    Range("G2").Value = _
+        "=IF(AND(OR(LEFT(RC[-4],3)=""STL"",LEFT(RC[-4],3)=""STD""),RC[7]=""GALVA""),LEFT(RC[-4],9)&""G"",LEFT(RC[-4],9))"
+    Range("H2").Value = "=LEFT(RC[-5],11)"
+    Range("I2").Value = "=LEFT(RC[-6],12)"
+    Range("J2").Value = "=LEFT(RC[-7],14)"
+    If lLastRowD > 2 Then Range("F2:J2").AutoFill Destination:=Range("F2:J" & lLastRowD), Type:=xlFillDefault
+    
+'ñîçäàíèå ïàíåëè óïðàâëåíèÿ äî âû÷èñëåíèé
+    Range("AE1").Value = "Âûïîëíèë:"
+    Range("AF1").Value = Application.UserName
+    Range("AE2").Value = "Äàòà ñîçäàíèÿ ñïåöèôèêàöèè:"
+    Range("AF2").Value = Date
+    
+    Range("AE3").Value = "ÈÍÑÒÐÓÊÖÈß"
+    
+    Range("AE4").Value = "ÏÐÎ×ÈÒÀÉÒÅ ÈÍÑÒÐÓÊÖÈÞ!!! ÑËÅÄÈÒÅ ÇÀ ÏÐÈÌÅ×ÀÍÈßÌÈ!!!"
+    
+    Range("AE5").Value = "Êóðñ ÅÂÐÎ ê ðóáëþ:"
+    Range("AF5").Value = "1"
+    Range("AF5").NumberFormat = _
+        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+    
+    Range("AE6").Value = "Âøèòàÿ ìàðæà êàëüêóëÿòîðà:"
+    Range("AF6").Value = "0%"
+    Range("AF6").NumberFormat = "0.00%"
+    
+    Range("AE7").Value = "Ðàñòàìîæêà:"
+    Range("AF7").Value = "0%"
+    Range("AF7").NumberFormat = "0.00%"
+    
+    Range("AE8").Value = "Ñêèäêà ORM:"
+    Range("AF8").Value = "0%"
+    Range("AF8").NumberFormat = "0.00%"
+    
+    Range("AE10").Value = "ÍÄÑ:"
+    Range("AF10").Value = "20%"
+    
+    Range("AE12").Value = "KPI ïî ñòîéêàì â ðàñ÷¸òå ÏÌ áåç ÍÄÑ:"
+    Range("AF12").Value = _
+        "=IFERROR(INDEX(R[-10]C[-31]:R[146]C[-10],MATCH(""STL"",R[-10]C[-26]:R[146]C[-26],0),22)/INDEX(R[-10]C[-31]:R[146]C[-10],MATCH(""STL"",R[-10]C[-26]:R[146]C[-26],0),20)/(1+R[5]C),1)"
+    Range("AF12").NumberFormat = "# ##0.00"" RUB/kg"""
+    
+    Range("AE13").Value = "Íàäáàâêà çà ìåòèçû è áðóñî÷êè:"
+    Range("AF13").Value = "0%"
+    Range("AF13").NumberFormat = "0.00%"
+    
+    Range("AE14").Value = "Íàäáàâêà çà ìàëåíüêèé çàêàç äëÿ ÏÌ:"
+    Range("AF14").Value = "0%"
+    Range("AF14").NumberFormat = "0.00%"
+    
+    Range("AE15").Value = "Íàäáàâêà çà óäîðîæàíèå ìåòèçîâ äëÿ ÏÌ:"
+    Range("AF15").Value = "0%"
+    Range("AF15").NumberFormat = "0.00%"
+    
+    Range("AE16").Value = "Àêòóàëüíûé KPI áåç ÍÄÑ äëÿ ÏÌ:"
+    Range("AF16").Value = "=R[-4]C"
+    
+    Range("AG15").Value = "KPI ñ ÍÄÑ"
+    Range("AG15").HorizontalAlignment = xlCenter
+    Range("AG15").VerticalAlignment = xlBottom
+    Range("AG16").Value = "=RC[-1]*(1+R[-6]C[-1])"
+    Range("AG16").NumberFormat = "# ##0.00"" RUB/kg"""
+    
+    Range("AE17").Value = "Ñêèäêà çà îñíàñòêó äëÿ ÏÌ:"
+    Range("AF17").Value = "0%"
+    Range("AF17").NumberFormat = "0.00%"
+    
+    Range("AE18").Value = "Ñêèäêà îò ÏÌ:"
+    Range("AF18").Value = "0%"
+    Range("AF18").NumberFormat = "0.00%"
+    
+    Range("AE20").Value = "¨ìêîñòü ñòåëëàæåé:"
+    Range("AF20").Value = "0"
+    Range("AF20").NumberFormat = "## ### ##0"" ïì"""
+    
+    Range("AE21").Value = "Ñòîèìîñòü ìîíòàæà ïàëëåòîìåñòà ñ ÍÄÑ:"
+    Range("AF21").Value = "0"
+    Range("AF21").NumberFormat = "# ##0.00"" RUB/ïì"""
+        
+    Range("AE22").Value = "Ñòîèìîñòü ìîíòàæà ïàëëåòîìåñòà áåç ÍÄÑ:"
+    Range("AF22").Value = "=R[-1]C/(1+R10C32)"
+    Range("AF22").NumberFormat = "# ##0.00"" RUB/ïì"""
+    
+    Range("AE23").Value = "Ñòîèìîñòü ìîíòàæà áåç ÍÄÑ:"
+    Range("AF23").Value = "=R[-3]C*R[-1]C"
+    Range("AF23").NumberFormat = _
+        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+    
+    Range("AE24").Value = "Ìîíòàæ â % îò çàêóïêè ñòåëëàæåé:"
+    
+    Range("AE26").Value = "Âåñ ñòåëëàæåé:"
+    
+    Range("AE27").Value = "Âåñ ñòåëëàæåé â îäíîé ìàøèíå:"
+    Range("AF27").Value = "19500"
+    Range("AF27").NumberFormat = "# ##0"" kg"""
+    
+    Range("AE28").Value = "Êîëè÷åñòâî ìàøèí:"
+    
+    Range("AE29").Value = "Ìàøèíà ÏÌ ïî Ðîññèè â ÐÓÁËßÕ ñ ÍÄÑ:"
+    Range("AF29").Value = "0"
+    Range("AF29").NumberFormat = _
+        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+    
+    Range("AE30").Value = "Ìàøèíà ÏÌ ïî Ðîññèè â ÐÓÁËßÕ áåç ÍÄÑ:"
+    Range("AF30").Value = "=R[-1]C/(1+R10C32)"
+    Range("AF30").NumberFormat = _
+        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+        
+    Range("AE31").Value = "Ìàøèíà ÎÐÌ ïî Åâðîïå â ÅÂÐÎ áåç ðàñòàìîæêè áåç ÍÄÑ:"
+    Range("AF31").Value = "0"
+    Range("AF31").NumberFormat = _
+        "_-[$ˆ-x-euro2] * #,##0.00_-;-[$ˆ-x-euro2] * #,##0.00_-;_-[$ˆ-x-euro2] * ""-""??_-;_-@_-"
+    
+    Range("AE32").Value = "Ìàøèíà ÎÐÌ ïî Ðîññèè â ÅÂÐÎ áåç ÍÄÑ:"
+    Range("AF32").Value = "0"
+    Range("AF32").NumberFormat = _
+        "_-[$ˆ-x-euro2] * #,##0.00_-;-[$ˆ-x-euro2] * #,##0.00_-;_-[$ˆ-x-euro2] * ""-""??_-;_-@_-"
+    
+    Range("AE33").Value = "Áðîêåðñêèå â ÐÓÁËßÕ áåç ÍÄÑ:"
+    Range("AF33").Value = "0"
+    Range("AF33").NumberFormat = _
+        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+    
+    Range("AE34").Value = "Còîèìîñòü äîñòàâêè áåç ÍÄÑ:"
+
+    Range("AE36").Value = "Ñòîèìîñòü çàêóïêè ñòåëëàæåé áåç ÍÄÑ:"
+    Range("AE37").Value = "Ðàñòàìîæêà â êýøå (áåç òðàíñïîðòà) áåç ÍÄÑ:"
+    Range("AF37").NumberFormat = _
+        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+    Range("AE38").Value = "Íàöåíêà íà ñòåëëàæè JH:"
+    Range("AF38").Value = "0"
+    Range("AF38").NumberFormat = "0.00%"
+    Range("AE39").Value = "Íàöåíêà íà ñòåëëàæè â êýøå áåç ÍÄÑ:"
+    Range("AF39").NumberFormat = _
+        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+    Range("AE40").Value = "Öåíà ñòåëëàæåé áåç ÍÄÑ:"
+    Range("AF40").NumberFormat = _
+        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+   
+    Range("AE42").Value = "Ñòîèìîñòü ìîíòàæà áåç ÍÄÑ:"
+    Range("AF42").NumberFormat = _
+        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+    Range("AE43").Value = "Íàöåíêà íà ìîíòàæ:"
+    Range("AF43").Value = "0"
+    Range("AF43").NumberFormat = "0.00%"
+    Range("AE44").Value = "Íàöåíêà íà ìîíòàæ â êýøå áåç ÍÄÑ:"
+    Range("AF44").NumberFormat = _
+        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+    Range("AE45").Value = "Öåíà ìîíòàæà áåç ÍÄÑ:"
+    Range("AF45").NumberFormat = _
+        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+    
+    Range("AE47").Value = "Ñòîèìîñòü äîñòàâêè áåç ÍÄÑ:"
+    Range("AF47").NumberFormat = _
+        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+    Range("AE48").Value = "Íàöåíêà íà äîñòàâêó:"
+    Range("AF48").Value = "0"
+    Range("AF48").NumberFormat = "0.00%"
+    Range("AE49").Value = "Íàöåíêà íà äîñòàâêó â êýøå áåç ÍÄÑ:"
+    Range("AF49").NumberFormat = _
+        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+    Range("AE50").Value = "Öåíà äîñòàâêè áåç ÍÄÑ:"
+    Range("AF50").NumberFormat = _
+        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+
+    Range("AE52").Value = "Gross Profit:"
+    Range("AF52").NumberFormat = "0.00%"
+    
+'çàïîëíåíèå ñòîëáöà íàèìåíîâàíèå / îïèñàíèå
+    Range("B2").Value = _
+        "=IFERROR(INDEX('C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C1:R334C10,MATCH(RC[4],'C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C6:R334C6,0),2),IFERROR(INDEX('C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C1:R334C10,MATCH(RC[5],'C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C7:R334C7,0),2),IFERROR(INDEX('C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C1:R334C10,MATCH(RC[6],'C:\SPECIFICATION\[PARTS.XLSX" & _
+        "]Ëèñò1'!R2C8:R334C8,0),2),IFERROR(INDEX('C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C1:R334C10,MATCH(RC[7],'C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C9:R334C9,0),2),INDEX('C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C1:R334C10,MATCH(RC[8],'C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C10:R334C10,0),2)))))&IF(OR(RC[3]=0,RC[3]=""""),"""",IF(RC[3]<1000,RC[3],TEXT(RC[3],""0 000"")))&IFERROR" & _
+        "(INDEX('C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C1:R334C10,MATCH(RC[4],'C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C6:R334C6,0),3),IFERROR(INDEX('C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C1:R334C10,MATCH(RC[5],'C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C7:R334C7,0),3),IFERROR(INDEX('C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C1:R334C10,MATCH(RC[6],'C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!" & _
+        "R2C8:R334C8,0),3),IFERROR(INDEX('C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C1:R334C10,MATCH(RC[7],'C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C9:R334C9,0),3),INDEX('C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C1:R334C10,MATCH(RC[8],'C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C10:R334C10,0),3)))))&IF(OR(RC[2]=0,RC[2]=""""),"""",IF(RC[2]<1000,RC[2],TEXT(RC[2],""0 000"")))&IFERROR(INDEX('" & _
+        "C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C1:R334C10,MATCH(RC[4],'C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C6:R334C6,0),4),IFERROR(INDEX('C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C1:R334C10,MATCH(RC[5],'C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C7:R334C7,0),4),IFERROR(INDEX('C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C1:R334C10,MATCH(RC[6],'C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C8:R33" & _
+        "4C8,0),4),IFERROR(INDEX('C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C1:R334C10,MATCH(RC[7],'C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C9:R334C9,0),4),INDEX('C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C1:R334C10,MATCH(RC[8],'C:\SPECIFICATION\[PARTS.XLSX]Ëèñò1'!R2C10:R334C10,0),4)))))" & _
+        ""
+    If lLastRowD > 2 Then Range("B2:B2").AutoFill Destination:=Range("B2:B" & lLastRowD), Type:=xlFillDefault
+
+'ôîðìàò â ñòîëáöû âåñà
+    Range("T2:T" & lLastRowD).NumberFormat = "0.00"" kg"""
+    Range("U2").NumberFormat = "### ### ### ##0"" kg"""
+
+'âñòàâêà ôîðìóë â ñòîëáöû âåñà è ñòîèìîñòè
+    Range("U2").Value = "=RC[-1]*RC[-20]"
+    lLastRowD = Cells(Rows.Count, "O").End(xlUp).Row
+    If lLastRowD > 2 Then Range("U2:U2").AutoFill Destination:=Range("U2:U" & lLastRowD), Type:=xlFillDefault
+    
+    Range("W2").Value = "=RC[-1]*RC[-22]"
+    lLastRowD = Cells(Rows.Count, "O").End(xlUp).Row
+    If lLastRowD > 2 Then Range("W2:W2").AutoFill Destination:=Range("W2:W" & lLastRowD), Type:=xlFillDefault
+    
+'ïåðåñ÷¸ò öåí
+    Range("X2").FormulaR1C1 = _
+        "=IF(OR(RC[-18]=""DTH"",RC[-18]=""BOH"",RC[-18]=""BOW"",RC[-18]=""BOS"",RC[-18]=""BOF"",RC[-18]=""MUT"",RC[-18]=""D""&UNICHAR(220)&""B""),RC[-2]*R5C32*(1-R6C32)*(1-R8C32)*(1+R13C32)*(1+R14C32)*(1+R15C32)*(1-R18C32)/(1+R17C32),RC[-2]*R5C32*(1-R6C32)*(1-R8C32)/R12C32*R16C32*(1+R13C32)*(1+R14C32)/(1+R17C32)*(1-R18C32))"
+    Range("Y2").FormulaR1C1 = "=RC[-1]*RC[-24]"
+    Range("Z2").FormulaR1C1 = "=RC[-2]*(1+R7C32)*(1+R38C32)"
+    Range("AA2").FormulaR1C1 = "=RC[-1]*RC[-26]"
+    Range("AB2").FormulaR1C1 = "=RC[-2]*(1+R10C32)"
+    Range("AC2").FormulaR1C1 = "=RC[-1]*RC[-28]"
+    Range("X2:AC2").NumberFormat = _
+        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+    If lLastRowD > 2 Then Range("X2:AC2").AutoFill Destination:=Range("X2:AC" & lLastRowD), Type:=xlFillDefault
+    
+'âû÷èñëåíèå ñóìì
+    Range("T1").End(xlDown).Offset(1, 0).Value = "Îáùèé âåñ:"
+    Range("T1").End(xlDown).HorizontalAlignment = xlRight
+    Range("U1").End(xlDown).Offset(1, 0).Value = "=SUM(R2C:R[-1]C)"
+    Range("V1").End(xlDown).Offset(1, 0).Value = "Êàëüê:"
+    Range("V1").End(xlDown).HorizontalAlignment = xlRight
+    Range("W1").End(xlDown).Offset(1, 0).Value = "=SUM(R2C:R[-1]C)"
+    Range("X1").End(xlDown).Offset(1, 0).Value = "Èíâîéñ:"
+    Range("X1").End(xlDown).HorizontalAlignment = xlRight
+    Range("X1").End(xlDown).Offset(1, 0).Value = "Èíâîéñ ñ ÍÄÑ:"
+    Range("X1").End(xlDown).HorizontalAlignment = xlRight
+    
+    Range("Y1").End(xlDown).Offset(1, 0).Value = "=SUM(R2C:R[-1]C)"
+    Range("Y1").End(xlDown).Offset(1, 0).Value = "=R[-1]C*(1+R10C32)"
+    
+    Range("Y1").End(xlDown).NumberFormat = _
+        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+    
+    Range("Z1").End(xlDown).Offset(1, 0).Value = "Öåíà áåç ÍÄÑ:"
+    Range("Z1").End(xlDown).HorizontalAlignment = xlRight
+    Range("AA1").End(xlDown).Offset(1, 0).Value = "=SUM(R2C:R[-1]C)"
+    Range("AB1").End(xlDown).Offset(1, 0).Value = "Öåíà ñ ÍÄÑ:"
+    Range("AB1").End(xlDown).HorizontalAlignment = xlRight
+    Range("AC1").End(xlDown).Offset(1, 0).Value = "=SUM(R2C:R[-1]C)"
+     
+'çàïîëíåíèå âû÷èñëÿåìûõ çíà÷åíèé ïàíåëè óïðàâëåíèÿ
+'    Range("AE36").Value = "Còîèìîñòü çàêóïêè ñòåëëàæåé áåç ÍÄÑ:"
+    Range("AF36").Value = "=" & Range("y1").End(xlDown).Offset(-1, 0).Address
+    
+'    Range("AE24").Value = "Ìîíòàæ â % îò çàêóïêè ñòåëëàæåé:"
+    Range("AF24").FormulaR1C1 = "=R[-1]C/R[12]C"
+    Range("AF24").NumberFormat = "0.00%"
+    
+'    Range("AE26").Value = "Âåñ ñòåëëàæåé:"
+    Range("AF26").Value = "=" & Range("u1").End(xlDown).Address
+    
+'    Range("AE28").Value = "Êîëè÷åñòâî ìàøèí:"
+    Range("AF28").FormulaR1C1 = "=ROUNDUP(R[-2]C/R[-1]C,0)"
+    Range("AF28").NumberFormat = "# ##0"" ìàøèí"""
+    
+'    Range("AE34").Value = "Ñòîèìîñòü äîñòàâêè áåç ÍÄÑ:"
+    Range("AF34").FormulaR1C1 = _
+        "=R28C32*(R30C32+R5C32*R31C32*(1+R7C32)+R5C32*R32C32+R33C32)"
+    Range("AF34").NumberFormat = _
+        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+        
+'    Range("AE42").Value = "Ñòîèìîñòü ìîíòàæà áåç ÍÄÑ:"
+    Range("AF42").FormulaR1C1 = "=R[-19]C"
+    
+'   Range("AE39").Value = "Íàöåíêà íà ñòåëëàæè â êýøå áåç ÍÄÑ:"
+    Range("AF39").NumberFormat = _
+        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+    Range("AF40").NumberFormat = _
+        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+    
+    Range("AF37").FormulaR1C1 = "=R36C32*R7C32"
+    
+    Range("AF39").FormulaR1C1 = "=R36C32*(1+R7C32)*R38C32"
+    Range("AF40").FormulaR1C1 = "=R36C32*(1+R7C32)*(1+R38C32)"
+        
+    Range("AF44").Value = "=R42C32*R43C32"
+        
+    Range("AF45").FormulaR1C1 = "=R42C32*(1+R43C32)"
+    
+    Range("AF47").Value = "=R[-13]C"
+    
+    Range("AF49").Value = "=R47C32*R48C32"
+        
+    Range("AF50").FormulaR1C1 = "=R47C32*(1+R48C32)"
+       
+'   Range("AE52").Value = "Gross Profit:"
+    Range("AF52").FormulaR1C1 = "=(R40C32-R36C32-R37C32+R45C32-R42C32+R50C32-R47C32)/(R36C32+R37C32+R42C32+R47C32)"
+    Range("AF52").NumberFormat = "0.00%"
+    
+    Range("AG51").Value = "GP â êýøå áåç ÍÄÑ"
+    Range("AG51").HorizontalAlignment = xlCenter
+    Range("AG52").VerticalAlignment = xlBottom
+    Range("AG52").Value = "=(R39C32+R44C32+R49C32)"
+    Range("AG52").NumberFormat = _
+        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+
+'äîáàâëåíèå äîñòàâêè è ìîíòàæà â ñóììû
+    Range("Z1").End(xlDown).Offset(1, 0).Value = "Äîñòàâêà áåç ÍÄÑ:"
+    Range("Z1").End(xlDown).HorizontalAlignment = xlRight
+    Range("AA1").End(xlDown).Offset(1, 0).Value = "=R50C32"
+    Range("Z1").End(xlDown).Offset(1, 0).Value = "Ìîíòàæ áåç ÍÄÑ:"
+    Range("Z1").End(xlDown).HorizontalAlignment = xlRight
+    Range("AA1").End(xlDown).Offset(1, 0).Value = "=R45C32"
+    Range("Z1").End(xlDown).Offset(1, 0).Value = "ÈÒÎÃÎ áåç ÍÄÑ:"
+    Range("Z1").End(xlDown).HorizontalAlignment = xlRight
+    Range("AA1").End(xlDown).Offset(1, 0).Value = "=R[-3]C+R[-2]C+R[-1]C"
+    
+    Range("AB1").End(xlDown).Offset(1, 0).Value = "Äîñòàâêà ñ ÍÄÑ:"
+    Range("AB1").End(xlDown).HorizontalAlignment = xlRight
+    Range("AC1").End(xlDown).Offset(1, 0).Value = "=RC[-2]*(1+R10C32)"
+    Range("AC1").End(xlDown).NumberFormat = _
+        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+    Range("AB1").End(xlDown).Offset(1, 0).Value = "Ìîíòàæ ñ ÍÄÑ:"
+    Range("AB1").End(xlDown).HorizontalAlignment = xlRight
+    Range("AC1").End(xlDown).Offset(1, 0).Value = "=RC[-2]*(1+R10C32)"
+    Range("AC1").End(xlDown).NumberFormat = _
+        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+    Range("AB1").End(xlDown).Offset(1, 0).Value = "ÈÒÎÃÎ ñ ÍÄÑ:"
+    Range("AB1").End(xlDown).HorizontalAlignment = xlRight
+    Range("AC1").End(xlDown).Offset(1, 0).Value = "=R[-3]C+R[-2]C+R[-1]C"
+
+'ðàñ÷¸ò ñòîèìîñòè ïàëëåòîìåñòà
+    Range("AE54").Value = "Ñòîèìîñòü ïàëëåòîìåñòà áåç ÍÄÑ:"
+    Range("AF54").FormulaR1C1 = "=(R40C32+R45C32+R50C32)/R20C32"
+    Range("AF54").NumberFormat = _
+        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+                    
+    Range("AG53").Value = "ïàëëåòîìåñòî ñ ÍÄÑ"
+    Range("AG53").HorizontalAlignment = xlCenter
+    Range("AG54").VerticalAlignment = xlBottom
+    Range("AG54").Value = "=RC[-1]*(1+R10C32)"
+    Range("AG54").NumberFormat = _
+        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+    
+'ðàñ÷¸ò íåîáõîäèìîé íàöåíêè
+'    Range("AI19").Value = "Íåîáõîäèìàÿ öåíà ñòåëëàæåé"
+'    Range("AH19:AJ19").MergeCells = True
+'    Range("AH19:AJ19").HorizontalAlignment = xlCenter
+'    Range("AH20").Value = "áåç ÍÄÑ"
+'    Range("AI20").Value = "c ÍÄÑ"
+'    Range("AJ20").Value = "Íàöåíêà"
+'    Range("AH21:AI22").NumberFormat = _
+'        "_-* #,##0.00 [$RUB-ru-RU]_-;-* #,##0.00 [$RUB-ru-RU]_-;_-* ""-""?? [$RUB-ru-RU]_-;_-@_-"
+'    Range("AJ21:AJ22").NumberFormat = "0.000000%"
+'    Range("AI21") = "=RC[-1]*(1+R10C32)"
+'    Range("AH22") = "=RC[1]/(1+R10C32)"
+'    Range("AJ21") = "=(RC[-2]-R38C32*(1+R7C32))/(R38C32*(1+R7C32))"
+'    Range("AJ22") = "=(RC[-1]-R38C32*(1+R7C32)*(1+R10C32))/(R38C32*(1+R7C32)*(1+R10C32))"
+      
+'íàèìåíîâàíèå áëîêîâ
+    Range("AD5").FormulaR1C1 = "ORM"
+    Range("AD12").FormulaR1C1 = "Ïîëèìåòàëë"
+    Range("AD20").FormulaR1C1 = "Ñòîèìîñòü ìîíòàæà"
+    Range("AD26").FormulaR1C1 = "Ñòîèìîñòü äîñòàâêè"
+    Range("AD36").FormulaR1C1 = "Ðàñ÷¸ò GP"
+    
+    With Range("AD5:AD8,AD12:AD18,AD20:AD24,AD26:AD34,AD36:AD52")
+        .HorizontalAlignment = xlRight
+        .VerticalAlignment = xlCenter
+        .MergeCells = True
+        .WrapText = True
+        .AddIndent = False
+        .IndentLevel = 0
+        .ShrinkToFit = False
+        .ReadingOrder = xlContext
+        .Orientation = 90
+    End With
+    
+'îôîðìëåíèå ïàíåëè óïðàâëåíèÿ
+    With Range("AE1:AF2,AE5:AF8,AE10:AF10,AE12:AF18,AG15,AG16,AE20:AF24,AE26:AF34,AE36:AF40,AE42:AF45,AE47:AF50,AE52:AG52,AG51,AG53,AE54:AG54")
+        .Borders(xlEdgeLeft).LineStyle = xlContinuous
+        .Borders(xlEdgeTop).LineStyle = xlContinuous
+        .Borders(xlEdgeBottom).LineStyle = xlContinuous
+        .Borders(xlEdgeRight).LineStyle = xlContinuous
+        .Borders(xlInsideVertical).LineStyle = xlContinuous
+        .Borders(xlInsideHorizontal).LineStyle = xlContinuous
+    End With
+    With Range("AE5:AF5,AE7:AF7,AE12:AF12,AE14:AF14,AE16:AG16,AE18:AF18,AE36:AF36,AE38:AF38,AE40:AF40").Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorAccent6
+        .TintAndShade = 0.599993896298105
+        .PatternTintAndShade = 0
+    End With
+    With Range("AE20:AF20,AE22:AF22,AE24:AF24,AE42:AF42,AE44:AF44").Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorAccent1
+        .TintAndShade = 0.599993896298105
+        .PatternTintAndShade = 0
+    End With
+    With Range("AE26:AF26,AE28:AF28,AE30:AF30,AE32:AF32,AE34:AF34,AE47:AF47,AE49:AF49").Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorAccent2
+        .TintAndShade = 0.599993896298105
+        .PatternTintAndShade = 0
+    End With
+    With Range("AE52,AG51:AG52").Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorAccent6
+        .TintAndShade = 0.399975585192419
+        .PatternTintAndShade = 0
+    End With
+    With Range("AD5:AD8,AD12:AD18,AD36:AD51").Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorAccent6
+        .TintAndShade = 0.399975585192419
+        .PatternTintAndShade = 0
+    End With
+    With Range("AD20:AD24").Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorAccent1
+        .TintAndShade = 0.399975585192419
+        .PatternTintAndShade = 0
+    End With
+    With Range("AD26:AD34").Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorAccent2
+        .TintAndShade = 0.399975585192419
+        .PatternTintAndShade = 0
+    End With
+    With Range("AD36:AD52").Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorAccent6
+        .TintAndShade = 0.399975585192419
+        .PatternTintAndShade = 0
+    End With
+
+'êîððåêòèðîâêà ñòèëÿ òàáëèöû
+    ActiveSheet.ListObjects.Add(xlSrcRange, Range("A1:AC" & lLastRowD), , xlYes).TableStyle = "TableStyleMedium15"
+
+    Cells.RowHeight = 15
+    Cells.VerticalAlignment = xlCenter
+    Cells.Font.Name = "Arial"
+    Cells.Font.Size = 9
+
+    Range("A1:AC1").RowHeight = 30
+    
+    Columns("A:A").ColumnWidth = 7
+    Columns("B:B").ColumnWidth = 25
+    Columns("C:C").ColumnWidth = 10
+    Columns("D:M").EntireColumn.Hidden = True
+    Columns("N:N").ColumnWidth = 10
+    Columns("O:S").EntireColumn.Hidden = True
+    Columns("T:T").ColumnWidth = 10
+    Columns("U:U").ColumnWidth = 13
+    Columns("V:V").ColumnWidth = 13
+    Columns("W:W").ColumnWidth = 18
+    Columns("X:X").ColumnWidth = 16
+    Columns("Y:AC").ColumnWidth = 18
+    Columns("AE:AE").ColumnWidth = 42
+    Columns("AF:AJ").ColumnWidth = 18
+
+    Range("Òàáëèöà1[Íàèìåíîâàíèå / Îïèñàíèå]").Rows.AutoFit
+    Range("Òàáëèöà1[Íàèìåíîâàíèå / Îïèñàíèå]").WrapText = True
+
+    With Range("A1:AC1").Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorLight1
+        .TintAndShade = 0.349986266670736
+        .PatternTintAndShade = 0
+    End With
+    
+    With Range("A1:AC1")
+        .WrapText = True
+        .Orientation = 0
+        .AddIndent = False
+        .IndentLevel = 0
+        .ShrinkToFit = False
+        .ReadingOrder = xlContext
+        .MergeCells = False
+        .Font.Italic = True
+        .Font.Bold = True
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+    End With
+
+    With Range("T" & lLastRowD + 1 & ":U" & lLastRowD + 1)
+        .Borders(xlEdgeLeft).LineStyle = xlContinuous
+        .Borders(xlEdgeLeft).Weight = xlMedium
+        .Borders(xlEdgeTop).LineStyle = xlContinuous
+        .Borders(xlEdgeTop).Weight = xlMedium
+        .Borders(xlEdgeBottom).LineStyle = xlContinuous
+        .Borders(xlEdgeBottom).Weight = xlMedium
+        .Borders(xlEdgeRight).LineStyle = xlContinuous
+        .Borders(xlEdgeRight).Weight = xlMedium
+        .Borders(xlInsideVertical).LineStyle = xlContinuous
+        .Borders(xlInsideHorizontal).LineStyle = xlContinuous
+    End With
+    
+    With Range("V" & lLastRowD + 1 & ":W" & lLastRowD + 1)
+        .Borders(xlEdgeLeft).LineStyle = xlContinuous
+        .Borders(xlEdgeLeft).Weight = xlMedium
+        .Borders(xlEdgeTop).LineStyle = xlContinuous
+        .Borders(xlEdgeTop).Weight = xlMedium
+        .Borders(xlEdgeBottom).LineStyle = xlContinuous
+        .Borders(xlEdgeBottom).Weight = xlMedium
+        .Borders(xlEdgeRight).LineStyle = xlContinuous
+        .Borders(xlEdgeRight).Weight = xlMedium
+        .Borders(xlInsideVertical).LineStyle = xlContinuous
+        .Borders(xlInsideHorizontal).LineStyle = xlContinuous
+    End With
+
+    With Range("X" & lLastRowD + 1 & ":Y" & lLastRowD + 2)
+        .Borders(xlEdgeLeft).LineStyle = xlContinuous
+        .Borders(xlEdgeLeft).Weight = xlMedium
+        .Borders(xlEdgeTop).LineStyle = xlContinuous
+        .Borders(xlEdgeTop).Weight = xlMedium
+        .Borders(xlEdgeBottom).LineStyle = xlContinuous
+        .Borders(xlEdgeBottom).Weight = xlMedium
+        .Borders(xlEdgeRight).LineStyle = xlContinuous
+        .Borders(xlEdgeRight).Weight = xlMedium
+        .Borders(xlInsideVertical).LineStyle = xlContinuous
+        .Borders(xlInsideHorizontal).LineStyle = xlContinuous
+    End With
+
+    With Range("Z" & lLastRowD + 1 & ":AA" & lLastRowD + 3)
+        .Borders(xlEdgeLeft).LineStyle = xlContinuous
+        .Borders(xlEdgeLeft).Weight = xlMedium
+        .Borders(xlEdgeTop).LineStyle = xlContinuous
+        .Borders(xlEdgeTop).Weight = xlMedium
+        .Borders(xlEdgeBottom).LineStyle = xlContinuous
+        .Borders(xlEdgeBottom).Weight = xlMedium
+        .Borders(xlEdgeRight).LineStyle = xlContinuous
+        .Borders(xlEdgeRight).Weight = xlMedium
+        .Borders(xlInsideVertical).LineStyle = xlContinuous
+        .Borders(xlInsideHorizontal).LineStyle = xlContinuous
+    End With
+
+    With Range("Z" & lLastRowD + 4 & ":AA" & lLastRowD + 4)
+        .Borders(xlEdgeLeft).LineStyle = xlContinuous
+        .Borders(xlEdgeLeft).Weight = xlMedium
+        .Borders(xlEdgeTop).LineStyle = xlContinuous
+        .Borders(xlEdgeTop).Weight = xlMedium
+        .Borders(xlEdgeBottom).LineStyle = xlContinuous
+        .Borders(xlEdgeBottom).Weight = xlMedium
+        .Borders(xlEdgeRight).LineStyle = xlContinuous
+        .Borders(xlEdgeRight).Weight = xlMedium
+        .Borders(xlInsideVertical).LineStyle = xlContinuous
+        .Borders(xlInsideHorizontal).LineStyle = xlContinuous
+    End With
+    
+        With Range("AB" & lLastRowD + 1 & ":AC" & lLastRowD + 3)
+        .Borders(xlEdgeLeft).LineStyle = xlContinuous
+        .Borders(xlEdgeTop).LineStyle = xlContinuous
+        .Borders(xlEdgeTop).Weight = xlMedium
+        .Borders(xlEdgeBottom).LineStyle = xlContinuous
+        .Borders(xlEdgeBottom).Weight = xlMedium
+        .Borders(xlEdgeRight).LineStyle = xlContinuous
+        .Borders(xlEdgeRight).Weight = xlMedium
+        .Borders(xlInsideVertical).LineStyle = xlContinuous
+        .Borders(xlInsideHorizontal).LineStyle = xlContinuous
+    End With
+
+    With Range("AB" & lLastRowD + 4 & ":AC" & lLastRowD + 4)
+        .Borders(xlEdgeLeft).LineStyle = xlContinuous
+        .Borders(xlEdgeTop).LineStyle = xlContinuous
+        .Borders(xlEdgeTop).Weight = xlMedium
+        .Borders(xlEdgeBottom).LineStyle = xlContinuous
+        .Borders(xlEdgeBottom).Weight = xlMedium
+        .Borders(xlEdgeRight).LineStyle = xlContinuous
+        .Borders(xlEdgeRight).Weight = xlMedium
+        .Borders(xlInsideVertical).LineStyle = xlContinuous
+        .Borders(xlInsideHorizontal).LineStyle = xlContinuous
+    End With
+
+    With Range("A1:AC" & lLastRowD)
+        .Borders(xlEdgeLeft).LineStyle = xlContinuous
+        .Borders(xlEdgeLeft).Weight = xlMedium
+        .Borders(xlEdgeTop).LineStyle = xlContinuous
+        .Borders(xlEdgeTop).Weight = xlMedium
+        .Borders(xlEdgeBottom).LineStyle = xlContinuous
+        .Borders(xlEdgeBottom).Weight = xlMedium
+        .Borders(xlEdgeRight).LineStyle = xlContinuous
+        .Borders(xlEdgeRight).Weight = xlMedium
+    End With
+        
+    With Range("T1:U" & lLastRowD + 1)
+        .Borders(xlEdgeLeft).LineStyle = xlContinuous
+        .Borders(xlEdgeLeft).Weight = xlMedium
+        .Borders(xlEdgeTop).LineStyle = xlContinuous
+        .Borders(xlEdgeTop).Weight = xlMedium
+        .Borders(xlEdgeBottom).LineStyle = xlContinuous
+        .Borders(xlEdgeBottom).Weight = xlMedium
+        .Borders(xlEdgeRight).LineStyle = xlContinuous
+        .Borders(xlEdgeRight).Weight = xlMedium
+    End With
+        
+    With Range("V1:W" & lLastRowD + 1)
+        .Borders(xlEdgeLeft).LineStyle = xlContinuous
+        .Borders(xlEdgeLeft).Weight = xlMedium
+        .Borders(xlEdgeTop).LineStyle = xlContinuous
+        .Borders(xlEdgeTop).Weight = xlMedium
+        .Borders(xlEdgeBottom).LineStyle = xlContinuous
+        .Borders(xlEdgeBottom).Weight = xlMedium
+        .Borders(xlEdgeRight).LineStyle = xlContinuous
+        .Borders(xlEdgeRight).Weight = xlMedium
+    End With
+      
+    With Range("X1:Y" & lLastRowD + 2)
+        .Borders(xlEdgeLeft).LineStyle = xlContinuous
+        .Borders(xlEdgeLeft).Weight = xlMedium
+        .Borders(xlEdgeTop).LineStyle = xlContinuous
+        .Borders(xlEdgeTop).Weight = xlMedium
+        .Borders(xlEdgeBottom).LineStyle = xlContinuous
+        .Borders(xlEdgeBottom).Weight = xlMedium
+        .Borders(xlEdgeRight).LineStyle = xlContinuous
+        .Borders(xlEdgeRight).Weight = xlMedium
+    End With
+        
+    With Range("Z1:AA" & lLastRowD + 4)
+        .Borders(xlEdgeLeft).LineStyle = xlContinuous
+        .Borders(xlEdgeLeft).Weight = xlMedium
+        .Borders(xlEdgeTop).LineStyle = xlContinuous
+        .Borders(xlEdgeTop).Weight = xlMedium
+        .Borders(xlEdgeBottom).LineStyle = xlContinuous
+        .Borders(xlEdgeBottom).Weight = xlMedium
+        .Borders(xlEdgeRight).LineStyle = xlContinuous
+        .Borders(xlEdgeRight).Weight = xlMedium
+    End With
+    
+    With Range("AB1:AC" & lLastRowD + 4)
+        .Borders(xlEdgeLeft).LineStyle = xlContinuous
+        .Borders(xlEdgeLeft).Weight = xlMedium
+        .Borders(xlEdgeTop).LineStyle = xlContinuous
+        .Borders(xlEdgeTop).Weight = xlMedium
+        .Borders(xlEdgeBottom).LineStyle = xlContinuous
+        .Borders(xlEdgeBottom).Weight = xlMedium
+        .Borders(xlEdgeRight).LineStyle = xlContinuous
+        .Borders(xlEdgeRight).Weight = xlMedium
+    End With
+    
+    With Range("Z" & lLastRowD + 1 & ":AA" & lLastRowD + 4)
+        .Borders(xlEdgeLeft).LineStyle = xlContinuous
+        .Borders(xlEdgeLeft).Weight = xlMedium
+        .Borders(xlEdgeTop).LineStyle = xlContinuous
+        .Borders(xlEdgeTop).Weight = xlMedium
+        .Borders(xlEdgeBottom).LineStyle = xlContinuous
+        .Borders(xlEdgeBottom).Weight = xlMedium
+        .Borders(xlEdgeRight).LineStyle = xlContinuous
+        .Borders(xlEdgeRight).Weight = xlMedium
+    End With
+    
+    With Range("AB" & lLastRowD + 1 & ":AC" & lLastRowD + 4)
+        .Borders(xlEdgeLeft).LineStyle = xlContinuous
+        .Borders(xlEdgeLeft).Weight = xlMedium
+        .Borders(xlEdgeTop).LineStyle = xlContinuous
+        .Borders(xlEdgeTop).Weight = xlMedium
+        .Borders(xlEdgeBottom).LineStyle = xlContinuous
+        .Borders(xlEdgeBottom).Weight = xlMedium
+        .Borders(xlEdgeRight).LineStyle = xlContinuous
+        .Borders(xlEdgeRight).Weight = xlMedium
+    End With
+    
+    Range("AF52").FormatConditions.Add Type:=xlCellValue, Operator:=xlLess, _
+        Formula1:="=0,04"
+    Range("AF52").FormatConditions(Range("AF52").FormatConditions.Count).SetFirstPriority
+    With Range("AF52").FormatConditions(1).Font
+        .Color = -16383844
+        .TintAndShade = 0
+    End With
+    With Range("AF52").FormatConditions(1).Interior
+        .PatternColorIndex = xlAutomatic
+        .Color = 13551615
+        .TintAndShade = 0
+    End With
+    Range("AF52").FormatConditions(1).StopIfTrue = False
+        
+'âûäåëåíèå ÿ÷åéêè ñ ìàðæèíàëüíîñòüþ
+    Range("AF38").Select
+    ActiveWindow.SmallScroll ToRight:=1
+    
+'ñîçäàíèå ïðèìå÷àíèé
+    Range("AE3").AddComment
+    Range("AE3").Comment.Visible = False
+    Range("AE3").Comment.Text Text:= _
+        "Èíñòðóêöèÿ" & Chr(10) & "" & Chr(10) & "ÌÀÊÐÎÑ Ñ×ÈÒÀÅÒ KPI ÏÎ ÑÒÎÉÊÀÌ ÁÅÇ Ó×¨ÒÀ ÒÈÏÀ ÏÎÊÐÛÒÈß!!! ÅÑËÈ Â ÂÀØÅÌ ÏÐÎÅÊÒÅ ÑÒÎÉÊÈ ÎÊÐÀØÅÍÛ, ÍÓÆÍÎ ÂÐÓ×ÍÓÞ ÑÊÎÐÐÅÊÒÈÐÎÂÀÒÜ ÐÀÑ×¨Ò!!!" & Chr(10) & "" & Chr(10) & "ÌÀÊÐÎÑ ÍÅ Ó×ÈÒÛÂÀÅÒ ÍÀÖÅÍÊÓ ÇÀ ÍÅÑÒÀÍÄÀÐÒÍÛÅ ÖÂÅÒÀ ÏÎÊÐÀÑÊÈ!!! ÅÑËÈ Â ÂÀØÅÌ ÏÐÎÅÊÒÅ ÅÑÒÜ ×ÀÑÒÈ Ñ ÍÅÑÒÀÍÄÀÐÒÍÛÌ ÏÎÊÐÛÒÈÅÌ, ÂÐÓ×ÍÓÞ ÑÊÎÐÐÅÊÒÈÐÓÉÒÅ ÐÀÑ×¨Ò!!!" & Chr(10) & "" & Chr(10) & "ÅÑËÈ ÂÀÌ ×ÒÎ-ÒÎ ÍÅÏÎÍßÒÍÎ, ÑÂßÆÈÒÅÑÜ Ñ ÒÎËÈÊÎÌ!!!" & Chr(10) & "" & Chr(10) & "Ìàêðîñ ïîäõîäèò äëÿ ñïåöèôèêàöèè èç êàëüêóëÿòîðà ORM." & Chr(10) & "" & Chr(10) & "Èç êàëüêóëÿöèè NRC äëÿ ÏÌ íåîáõîäèìî âðó÷íóþ âûäåëèòü òàáëèöó ñî âêëàäêè List for Polimetall, âêëþ÷àÿ ñðîêó ¹1. Ïåðâàÿ ñòðîêà ñ äåòàëÿìè ñòåëëàæåé äîëæíà áûòü ïîä íîìåðîì 3." & Chr(10) & "" & Chr(10) & "Â òàáëèöå ìîæíî èçìåíÿòü êîëè÷åñòâî ýëåìåíòîâ." & Chr(10) & "" & Chr(10) & "Äëÿ ðàñ÷¸òà öåí, çàïîëíèòü òîëüêî îäèí èç áëîêîâ Ïîëèìåòàëë èëè ORM."
+    Range("AE3").Comment.Shape.Width = 205
+    Range("AE3").Comment.Shape.Height = 400
+    
+    Range("AE5").AddComment
+    Range("AE5").Comment.Visible = False
+    Range("AE5").Comment.Text Text:= _
+        "Ââåñòè êóðñ ÅÂÐÎ." & Chr(10) & "Ó÷èòûâàéòå âîçìîæíûå êîëåáàíèÿ êóðñà!" & Chr(10) & "Äëÿ êðóïíûõ ïðîåêòîâ êóðñ ÅÂÐÎ íåîáõîäèìî çàïðîñèòü ó ôèíàíñîâîãî îòäåëà!"
+    Range("AE5").Comment.Shape.Width = 205
+    Range("AE5").Comment.Shape.Height = 50
+
+    Range("AE6").AddComment
+    Range("AE6").Comment.Visible = False
+    Range("AE6").Comment.Text Text:= _
+        "Ââåñòè âåëè÷èíó Gross Margin èç êàëüêóëÿòîðà ORM." & Chr(10) & "" & Chr(10) & "Åñëè óñòàíîâèòü ÊÓÐÑ ÅÂÐÎ=1, òî â ÿ÷åéêå Èíâîéñ: äîëæíî ïîëó÷èòüñÿ çíà÷åíèå Purchase Price (EUR)." & Chr(10) & "1*(1-X%)"
+    Range("AE6").Comment.Shape.Width = 205
+    Range("AE6").Comment.Shape.Height = 80
+    
+    Range("AE7").AddComment
+    Range("AE7").Comment.Visible = False
+    Range("AE7").Comment.Text Text:= _
+        "6%" & Chr(10) & "" & Chr(10) & "Ó÷èòûâàåòñÿ â Öåíå ñòåëëàæåé è Ñòîèìîñòè äîñòàâêè ïî Åâðîïå." & Chr(10) & "1*(1+X%)"
+    Range("AE7").Comment.Shape.Width = 205
+    Range("AE7").Comment.Shape.Height = 70
+    
+    Range("AE8").AddComment
+    Range("AE8").Comment.Visible = False
+    Range("AE8").Comment.Text Text:= _
+        "Äåðçàéòå!" & Chr(10) & "1*(1-X%)"
+    Range("AE8").Comment.Shape.Width = 50
+    Range("AE8").Comment.Shape.Height = 30
+    
+    Range("AE12").AddComment
+    Range("AE12").Comment.Visible = False
+    Range("AE12").Comment.Text Text:= _
+        "Îáðàòèòå âíèìàíèå íà öâåò ñòîåê, ïî êîòîðûì ñ÷èòàåòñÿ KPI!" & Chr(10) & "Íåîáõîäèìî ó÷åñòü ñêèäêó çà îñíàñòêó!" & Chr(10) & "Åñëè KPI=1, â ñïåöèôèêàöèè íåò ñòîåê."
+    Range("AE12").Comment.Shape.Width = 205
+    Range("AE12").Comment.Shape.Height = 60
+    
+    Range("AE13").AddComment
+    Range("AE13").Comment.Visible = False
+    Range("AE13").Comment.Text Text:= _
+        "~2-4%" & Chr(10) & "1*(1+X%)"
+    Range("AE13").Comment.Shape.Width = 50
+    Range("AE13").Comment.Shape.Height = 30
+    
+    Range("AE14").AddComment
+    Range("AE14").Comment.Visible = False
+    Range("AE14").Comment.Text Text:= _
+        "EUR / RUB = 90:" & Chr(10) & "" & Chr(10) & "0 ˆ         -  5.000 ˆ (450.000 RUB)   => + 10%" & Chr(10) & "5.001 ˆ   - 10.000 ˆ (900.000 RUB)   => + 6%" & Chr(10) & "10.001 ˆ - 20.000 ˆ (1.800.000 RUB) => + 4%" & Chr(10) & "20.001 ˆ - 50.000 ˆ (4.500.000 RUB) => + 2%" & Chr(10) & "1*(1+X%)"
+    Range("AE14").Comment.Shape.Width = 205
+    Range("AE14").Comment.Shape.Height = 85
+    
+    Range("AE15").AddComment
+    Range("AE15").Comment.Visible = False
+    Range("AE15").Comment.Text Text:= _
+        "Âëèÿåò íà öåíó àíêåðîâ, ìåòèçîâ è âòóëîê" & Chr(10) & "1*(1+X%)"
+    Range("AE15").Comment.Shape.Width = 205
+    Range("AE15").Comment.Shape.Height = 30
+    
+    Range("AE16").AddComment
+    Range("AE16").Comment.Visible = False
+    Range("AE16").Comment.Text Text:= _
+        "Ââåäèòå KPI ïî êîòîðîìó õîòèòå ïîñ÷èòàòü ñòåëëàæè." & Chr(10) & "Íå âëèÿåò íà ìåòèçû, àíêåðà è âòóëêè"
+    Range("AE16").Comment.Shape.Width = 205
+    Range("AE16").Comment.Shape.Height = 40
+    
+    Range("AE17").AddComment
+    Range("AE17").Comment.Visible = False
+    Range("AE17").Comment.Text Text:= _
+        "Âëèÿåò íà ðàñ÷¸ò KPI è öåíû" & Chr(10) & "1/(1+X%)"
+    Range("AE17").Comment.Shape.Width = 150
+    Range("AE17").Comment.Shape.Height = 30
+    
+    Range("AE18").AddComment
+    Range("AE18").Comment.Visible = False
+    Range("AE18").Comment.Text Text:= _
+        "Äåðçàéòå!" & Chr(10) & "1*(1-X%)"
+    Range("AE18").Comment.Shape.Width = 50
+    Range("AE18").Comment.Shape.Height = 30
+    
+    Range("AE27").AddComment
+    Range("AE27").Comment.Visible = False
+    Range("AE27").Comment.Text Text:= _
+        "Äëÿ êàæäîãî ïðîåêòà ïî-ðàçíîìó. Â ñðåäíåì ïî áîëüíèöå, ñòîéêè ãðóçÿò ïî ~18-19 òîíí â Åôóðó, áàëêè ãðóçÿò ïî ~16-17 òîíí â Åôóðó."
+    Range("AE27").Comment.Shape.Width = 205
+    Range("AE27").Comment.Shape.Height = 45
+    
+    Range("AE38").AddComment
+    Range("AE38").Comment.Visible = False
+    Range("AE38").Comment.Text Text:= _
+        "1*(1+X%)"
+    Range("AE38").Comment.Shape.Width = 50
+    Range("AE38").Comment.Shape.Height = 15
+    
+    Range("AE52").AddComment
+    Range("AE52").Comment.Visible = False
+    Range("AE52").Comment.Text Text:= _
+        "Äåðçàéòå!" & Chr(10) & "" & Chr(10) & "Äëÿ ñòðàòåãè÷åñêèõ çàêàçîâ - GP ñîãëàñîâûâàòü ñ Äèðåêòîðîì." & Chr(10) & "" & Chr(10) & "Äëÿ ìàëåíüêèõ çàêàçîâ äî 1Ì" & Chr(10) & "   äî 200 ò.ð. = 50%" & Chr(10) & "   äî 500 ò.ð. = 30%" & Chr(10) & "   Âûøå = 20%"
+    Range("AE52").Comment.Shape.Width = 205
+    Range("AE52").Comment.Shape.Height = 110
+    
+End Sub
